@@ -8,4 +8,5 @@
 #  - Включить Swagger UI.
 spring:
   liquibase:
-    datas
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
