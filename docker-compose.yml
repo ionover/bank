@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  backend:
+    build: .
+    container_name: bank-rest
+    environment:
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USER: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASS}
+
+      SPRING_FLYWAY_URL: ${DB_URL}
+      SPRING_FLYWAY_USER: ${DB_USER}
+      SPRING_FLYWAY_PASSWORD: ${DB_PASS}
+
+      BACK-OPTIONS_FILEPATH: /opt/files_storage
+      BACK-OPTIONS_ALLOWEDORIGIN: http://10.10.10.61
+      BACK-OPTIONS_JWTSECRETKEY: mySecretKeyForJWTTokenGenerationAndValidation123456789
+      BACK-OPTIONS_JWTEXPIRATION: 86400000
+    ports:
+      - "8084:8084"
+    depends_on:
+      - postgres
+    volumes:
+      - /opt/javaDip/files_storage:/opt/files_storage
+
+  postgres:
+    image: postgres:17
+    container_name: bank-postgres
+    ports:
+      - "5432:5432"
+    environment:
+        POSTGRES_USER: bank
+        POSTGRES_PASSWORD: bank
+        POSTGRES_DB: bank
+
+
+#      #
+#      # docker-compose.yml — определяет сервисы для разработки и тестирования.
+#
+#        Что нужно сделать:
+#          - Настроить сервисы для:
+#              - PostgreSQL (или MySQL) с начальной базой.
+#              - Приложения Spring Boot (если нужно).
+#          - Открыть нужные порты (например, 5432, 8080).
+#          - Настроить volume для хранения данных БД.
