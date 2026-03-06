@@ -10,6 +10,6 @@ public class CrudController {
 
     @GetMapping("/login")
     public String login(){
-
+        return "";
     }
 }
